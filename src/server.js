@@ -1,17 +1,17 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
 const Hapi = require('@hapi/hapi');
 const routes = require('./routes');
 
 const init = async () => {
   const server = Hapi.server({
-    port: 9000,
+    port: 3000,
     host: 'localhost',
   });
 
   server.route(routes);
 
   await server.start();
-  console.log(`Server running on ${server.info.uri}`);
+  console.log('Server running on %s', server.info.uri);
 };
 
 process.on('unhandledRejection', (err) => {
