@@ -491,7 +491,7 @@ const getUserPointsHandler = async (request, h) => {
     }
 
     // Dapatkan total poin user
-    const [pointsRows] = await db.query('SELECT total_points FROM user_points WHERE user_id = ?', [id]);
+    const [pointsRows] = await db.query('SELECT * FROM user_points WHERE user_id = ?', [id]);
     if (pointsRows.length === 0) {
       return h.response({
         status: 'fail',
@@ -516,10 +516,10 @@ const getUserPointsHandler = async (request, h) => {
   }
 };
 const getPickupsByUserIdHandler = async (request, h) => {
-  const { id } = request.params;
+  const { userId } = request.params;
 
   try {
-    const [rows] = await db.query('SELECT * FROM pickups WHERE user_id = ?', [id]);
+    const [rows] = await db.query('SELECT * FROM pickups WHERE user_id = ?', [userId]);
     if (rows.length === 0) {
       return h.response({
         status: 'fail',
@@ -701,6 +701,107 @@ const getAllWithdrawalsHandler = async (request, h) => {
   }
 };
 
+const getPickupByIdHandler = async (request, h) => {
+  const { id } = request.params;
+
+  try {
+    const [rows] = await db.query('SELECT * FROM pickups WHERE id = ?', [id]);
+
+    if (rows.length === 0) {
+      return h.response({
+        status: 'fail',
+        message: 'Pickup not found',
+        data: null,
+      }).code(404);
+    }
+
+    return h.response({
+      status: 'success',
+      message: 'Pickup found',
+      data: rows[0],
+    }).code(200);
+  } catch (error) {
+    console.error('Error fetching pickup:', error.message);
+    return h.response({
+      status: 'error',
+      message: 'Internal Server Error',
+      data: null,
+    }).code(500);
+  }
+};
+
+const getWithdrawalByIdHandler = async (request, h) => {
+  const { id } = request.params;
+
+  try {
+    const [rows] = await db.query('SELECT * FROM withdrawals WHERE id = ?', [id]);
+
+    if (rows.length === 0) {
+      return h.response({
+        status: 'fail',
+        message: 'Withdrawal not found',
+        data: null,
+      }).code(404);
+    }
+
+    const withdrawal = rows[0];
+
+    return h.response({
+      status: 'success',
+      message: 'Withdrawal found',
+      data: withdrawal,
+    }).code(200);
+  } catch (error) {
+    console.error('Error fetching withdrawal:', error.message);
+    return h.response({
+      status: 'error',
+      message: 'Internal Server Error',
+      data: null,
+    }).code(500);
+  }
+};
+const getTokensHandler = async (request, h) => {
+  try {
+    // Dapatkan semua token dari tabel tokens
+    const [tokens] = await db.query('SELECT * FROM tokens');
+
+    return h.response({
+      status: 'success',
+      message: 'Tokens retrieved successfully',
+      data: tokens,
+    }).code(200);
+  } catch (error) {
+    console.log('Error during retrieving tokens:', error.message);
+    return h.response({
+      status: 'error',
+      message: 'Internal Server Error',
+      data: null,
+    }).code(500);
+  }
+};
+
+const getTokensByUserIdHandler = async (request, h) => {
+  const { userId } = request.params;
+
+  try {
+    // Dapatkan token berdasarkan user ID
+    const [tokens] = await db.query('SELECT * FROM tokens WHERE user_id = ?', [userId]);
+
+    return h.response({
+      status: 'success',
+      message: 'Tokens retrieved successfully',
+      data: tokens,
+    }).code(200);
+  } catch (error) {
+    console.log('Error during retrieving tokens:', error.message);
+    return h.response({
+      status: 'error',
+      message: 'Internal Server Error',
+      data: null,
+    }).code(500);
+  }
+};
+
 module.exports = {
   registerHandler,
   loginHandler,
@@ -719,4 +820,8 @@ module.exports = {
   requestWithdrawalHandler,
   approveWithdrawalHandler,
   getAllWithdrawalsHandler,
+  getPickupByIdHandler,
+  getWithdrawalByIdHandler,
+  getTokensHandler,
+  getTokensByUserIdHandler,
 };

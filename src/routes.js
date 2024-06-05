@@ -92,18 +92,18 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/users/{id}/points',
+    path: '/points/{id}',
     handler: handlers.getUserPointsHandler,
     options: {
-      pre: [{ method: middleware.validateToken }],
+      auth: false,
     },
   },
   {
     method: 'GET',
-    path: '/pickups/users/{id}',
+    path: '/pickups/users/{userId}',
     handler: handlers.getPickupsByUserIdHandler,
     options: {
-      pre: [{ method: middleware.validateToken }],
+      auth: false,
     },
   },
   {
@@ -134,6 +134,38 @@ const routes = [
     method: 'GET',
     path: '/withdrawals',
     handler: handlers.getAllWithdrawalsHandler,
+    options: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
+    path: '/pickups/{id}',
+    handler: handlers.getPickupByIdHandler,
+    options: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
+    path: '/withdrawals/{id}',
+    handler: handlers.getWithdrawalByIdHandler,
+    options: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
+    path: '/tokens',
+    handler: handlers.getTokensHandler,
+    options: {
+      auth: false,
+    },
+  },
+  {
+    method: 'GET',
+    path: '/tokens/{userId}',
+    handler: handlers.getTokensByUserIdHandler,
     options: {
       auth: false,
     },
