@@ -19,8 +19,6 @@ const init = async () => {
       iss: false,
       sub: false,
       nbf: true,
-      exp: true,
-      maxAgeSec: 14400,
       timeSkewSec: 15,
     },
     validate: (artifacts, request, h) => {
