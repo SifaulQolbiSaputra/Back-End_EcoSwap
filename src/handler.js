@@ -54,6 +54,51 @@ const registerHandler = async (request, h) => {
   }).code(201);
 };
 
+// Handler untuk registrasi admin
+const registerAdminHandler = async (request, h) => {
+  const { username, email, password } = request.payload;
+
+  // Validasi input
+  const schema = Joi.object({
+    username: Joi.string().min(3).max(30).required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).required(),
+  });
+
+  const { error } = schema.validate({ username, email, password });
+  if (error) {
+    return h.response({
+      status: 'fail',
+      message: error.details[0].message,
+      data: null,
+    }).code(400);
+  }
+
+  // Cek apakah admin sudah ada
+  const [rows] = await db.query('SELECT * FROM admins WHERE email = ? OR username = ?', [email, username]);
+  if (rows.length > 0) {
+    return h.response({
+      status: 'fail',
+      message: 'Admin already exists',
+      data: null,
+    }).code(400);
+  }
+
+  // Generate unique ID
+  const id = uuidv4();
+
+  // Simpan admin dengan password teks biasa
+  await db.query('INSERT INTO admins (id, username, email, password) VALUES (?, ?, ?, ?)', [id, username, email, password]);
+
+  // Dapatkan data admin yang baru didaftarkan
+  const [newAdmin] = await db.query('SELECT id, username, email, created_at FROM admins WHERE id = ?', [id]);
+
+  return h.response({
+    status: 'success',
+    message: 'Admin registered successfully',
+    data: newAdmin[0],
+  }).code(201);
+};
 // Handler untuk login
 const loginHandler = async (request, h) => {
   const { email, password } = request.payload;
@@ -804,6 +849,7 @@ const getTokensByUserIdHandler = async (request, h) => {
 
 module.exports = {
   registerHandler,
+  registerAdminHandler,
   loginHandler,
   getUserHandler,
   updateUserHandler,

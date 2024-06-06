@@ -12,6 +12,14 @@ const routes = [
   },
   {
     method: 'POST',
+    path: '/daftar-admin',
+    handler: handlers.registerAdminHandler,
+    options: {
+      auth: false,
+    },
+  },
+  {
+    method: 'POST',
     path: '/login',
     handler: handlers.loginHandler,
     options: {
