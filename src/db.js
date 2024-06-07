@@ -2,10 +2,10 @@
 const mysql = require('mysql2');
 
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'sifaul',
-  password: '12345',
-  database: 'ecoswap',
+  host: 'SG-ecoswap-db-8744-mysql-master.servers.mongodirector.com',
+  user: 'sgroot',
+  password: 'eVMCmGK#ogtv8fHG',
+  database: 'ecoswap-db',
 });
 
 module.exports = pool.promise();
