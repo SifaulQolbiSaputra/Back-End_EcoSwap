@@ -2,10 +2,10 @@
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcrypt');
 const db = require('./db');
 
 // Handler untuk registrasi
+// Handler untuk registrasi user
 const registerHandler = async (request, h) => {
   const { username, email, password } = request.payload;
 
@@ -38,11 +38,8 @@ const registerHandler = async (request, h) => {
   // Generate unique ID
   const id = uuidv4();
 
-  // Hash password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Simpan user dengan hashed password
-  await db.query('INSERT INTO users (id, username, email, password) VALUES (?, ?, ?, ?)', [id, username, email, hashedPassword]);
+  // Simpan user dengan password teks biasa (tidak di-hash)
+  await db.query('INSERT INTO users (id, username, email, password) VALUES (?, ?, ?, ?)', [id, username, email, password]);
 
   // Dapatkan data user yang baru didaftarkan
   const [newUser] = await db.query('SELECT id, username, email, created_at FROM users WHERE id = ?', [id]);
@@ -99,7 +96,7 @@ const registerAdminHandler = async (request, h) => {
     data: newAdmin[0],
   }).code(201);
 };
-// Handler untuk login
+// Handler untuk login user
 const loginHandler = async (request, h) => {
   const { email, password } = request.payload;
 
@@ -130,9 +127,8 @@ const loginHandler = async (request, h) => {
 
   const user = rows[0];
 
-  // Verifikasi password dengan bcrypt
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
+  // Verifikasi password tanpa hash
+  if (password !== user.password) {
     return h.response({
       status: 'fail',
       message: 'Invalid password',
@@ -262,7 +258,7 @@ const updateUserHandler = async (request, h) => {
   const user = rows[0];
   const updatedUsername = username || user.username;
   const updatedEmail = email || user.email;
-  const updatedPassword = password ? await bcrypt.hash(password, 10) : user.password;
+  const updatedPassword = password || user.password;
 
   await db.query('UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?', [updatedUsername, updatedEmail, updatedPassword, id]);
 
@@ -911,7 +907,53 @@ const deleteWithdrawalHandler = async (request, h) => {
     }).code(500);
   }
 };
+// Handler untuk menghapus user
+const deleteUserHandler = async (request, h) => {
+  const { id } = request.params;
 
+  // Validasi ID
+  const schema = Joi.object({
+    id: Joi.string().required(),
+  });
+
+  const { error } = schema.validate({ id });
+  if (error) {
+    return h.response({
+      status: 'fail',
+      message: error.details[0].message,
+      data: null,
+    }).code(400);
+  }
+
+  try {
+    // Cek apakah user ada
+    const [rows] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
+    if (rows.length === 0) {
+      return h.response({
+        status: 'fail',
+        message: 'User not found',
+        data: null,
+      }).code(404);
+    }
+
+    // Hapus user dari database
+    await db.query('DELETE FROM users WHERE id = ?', [id]);
+
+    return h.response({
+      status: 'success',
+      message: 'User deleted successfully',
+      data: null,
+    }).code(200);
+  // eslint-disable-next-line no-shadow
+  } catch (error) {
+    console.log('Error during user deletion:', error.message);
+    return h.response({
+      status: 'error',
+      message: 'Internal Server Error',
+      data: null,
+    }).code(500);
+  }
+};
 module.exports = {
   registerHandler,
   registerAdminHandler,
@@ -937,4 +979,5 @@ module.exports = {
   getTokensByUserIdHandler,
   deleteWithdrawalHandler,
   deletePickupHandler,
+  deleteUserHandler,
 };

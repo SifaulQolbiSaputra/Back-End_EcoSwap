@@ -194,6 +194,14 @@ const routes = [
       auth: false,
     },
   },
+  {
+    method: 'DELETE',
+    path: '/hapus-users/{id}',
+    handler: handlers.deleteUserHandler,
+    options: {
+      auth: false,
+    },
+  },
 ];
 
 module.exports = routes;
