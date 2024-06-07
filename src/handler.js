@@ -847,6 +847,71 @@ const getTokensByUserIdHandler = async (request, h) => {
   }
 };
 
+const deletePickupHandler = async (request, h) => {
+  const { id } = request.params;
+
+  try {
+    // Cek apakah pengajuan penjemputan ada
+    const [rows] = await db.query('SELECT * FROM pickups WHERE id = ?', [id]);
+    if (rows.length === 0) {
+      return h.response({
+        status: 'fail',
+        message: 'Pickup request not found',
+        data: null,
+      }).code(404);
+    }
+
+    // Hapus pengajuan penjemputan
+    await db.query('DELETE FROM pickups WHERE id = ?', [id]);
+
+    return h.response({
+      status: 'success',
+      message: 'Pickup request deleted successfully',
+      data: null,
+    }).code(200);
+  } catch (error) {
+    console.log('Error during pickup deletion:', error.message);
+    return h.response({
+      status: 'error',
+      message: 'Internal Server Error',
+      data: null,
+    }).code(500);
+  }
+};
+
+// Handler untuk menghapus pengajuan penarikan dana
+const deleteWithdrawalHandler = async (request, h) => {
+  const { id } = request.params;
+
+  try {
+    // Cek apakah pengajuan penarikan ada
+    const [rows] = await db.query('SELECT * FROM withdrawals WHERE id = ?', [id]);
+    if (rows.length === 0) {
+      return h.response({
+        status: 'fail',
+        message: 'Withdrawal request not found',
+        data: null,
+      }).code(404);
+    }
+
+    // Hapus pengajuan penarikan
+    await db.query('DELETE FROM withdrawals WHERE id = ?', [id]);
+
+    return h.response({
+      status: 'success',
+      message: 'Withdrawal request deleted successfully',
+      data: null,
+    }).code(200);
+  } catch (error) {
+    console.log('Error during withdrawal deletion:', error.message);
+    return h.response({
+      status: 'error',
+      message: 'Internal Server Error',
+      data: null,
+    }).code(500);
+  }
+};
+
 module.exports = {
   registerHandler,
   registerAdminHandler,
@@ -870,4 +935,6 @@ module.exports = {
   getWithdrawalByIdHandler,
   getTokensHandler,
   getTokensByUserIdHandler,
+  deleteWithdrawalHandler,
+  deletePickupHandler,
 };

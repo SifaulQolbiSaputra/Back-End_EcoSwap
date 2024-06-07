@@ -178,6 +178,22 @@ const routes = [
       auth: false,
     },
   },
+  {
+    method: 'DELETE',
+    path: '/hapus-pickups/{id}',
+    handler: handlers.deletePickupHandler,
+    options: {
+      auth: false,
+    },
+  },
+  {
+    method: 'DELETE',
+    path: '/hapus-withdrawals/{id}',
+    handler: handlers.deleteWithdrawalHandler,
+    options: {
+      auth: false,
+    },
+  },
 ];
 
 module.exports = routes;
