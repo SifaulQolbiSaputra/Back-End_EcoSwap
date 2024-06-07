@@ -13,7 +13,7 @@ const init = async () => {
   await server.register(Jwt);
 
   server.auth.strategy('jwt', 'jwt', {
-    keys: 'your_jwt_secret',
+    keys: process.env.JWT_SECRET,
     verify: {
       aud: false,
       iss: false,
@@ -34,10 +34,5 @@ const init = async () => {
   await server.start();
   console.log('Server running on %s', server.info.uri);
 };
-
-process.on('unhandledRejection', (err) => {
-  console.log(err);
-  process.exit(1);
-});
 
 init();
