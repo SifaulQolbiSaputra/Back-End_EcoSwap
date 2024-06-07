@@ -1,7 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 const Hapi = require('@hapi/hapi');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const Jwt = require('@hapi/jwt');
+require('dotenv').config();
 const routes = require('./routes');
 
 const init = async () => {
