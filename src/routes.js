@@ -84,7 +84,7 @@ const routes = [
   },
   {
     method: 'DELETE',
-    path: '/pickups/{id}',
+    path: '/batal-pickups/{id}',
     handler: handlers.cancelPickupHandler,
     options: {
       pre: [{ method: middleware.validateToken }],
