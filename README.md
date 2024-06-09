@@ -3,13 +3,12 @@
 ## Base URL
 https://back-end-eco-swap-api.vercel.app/
 
-## 1. Registrasi Pengguna
+1. Registrasi Pengguna
 
-### Endpoint
-`POST /daftar`
+Endpoint : POST /daftar
 
-### Body Permintaan
-```json
+Body Permintaan : json
+
 {
  "username": "lukman",
  "email": "lukman@example.com",
@@ -30,26 +29,25 @@ Berhasil: 201
   }
 }
 
-## 2. Login Pengguna
+2. Login Pengguna
 
-### Endpoint
-`POST /login`
+Endpoint: POST /login
+Body Permintaan: json
 
-### Body Permintaan
-```json
 {
- "email": "lukman@example.com",
- "password": "lukman12345"
+  "email": "lukman@example.com",
+  "password": "lukman12345"
 }
 
-Respons
+Respons:
 Berhasil: 200
 
 {
-  "status": "success",
-  "message": "User login successful",
-  "data": {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmOTIyMjY0NC05NTVlLTRkMmItYTNiNy03ZDZkM2VjYzRkYjkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNzY0ODg0MCwiZXhwIjoxNzE3NjUyNDQwfQ.pD0QjaOmGNF2K3F2Tev958TUpZcLcdHVuxTMFDwnPr8",
-    "userId": "f9222644-955e-4d2b-a3b7-7d6d3ecc4db9"
-  }
+    "status": "success",
+    "message": "User login successful",
+    "data": {
+        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJmOTIyMjY0NC05NTVlLTRkMmItYTNiNy03ZDZkM2VjYzRkYjkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNzY0ODg0MCwiZXhwIjoxNzE3NjUyNDQwfQ.pD0QjaOmGNF2K3F2Tev958TUpZcLcdHVuxTMFDwnPr8",
+        "userId": "f9222644-955e-4d2b-a3b7-7d6d3ecc4db9"
+    }
 }
+
