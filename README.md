@@ -3,11 +3,11 @@
 ## Base URL
 https://back-end-eco-swap-api.vercel.app/
 
-1. Registrasi Pengguna
+## 1. Registrasi Pengguna
 
-Endpoint : POST /daftar
+### Endpoint : POST /daftar
 
-Body Permintaan : json
+### Body Permintaan : json
 
 {
  "username": "lukman",
@@ -15,7 +15,7 @@ Body Permintaan : json
  "password": "lukman12345"
 }
 
-Respons
+### Respons
 Berhasil: 201
 
 {
@@ -29,17 +29,17 @@ Berhasil: 201
   }
 }
 
-2. Login Pengguna
+## 2. Login Pengguna
 
-Endpoint: POST /login
-Body Permintaan: json
+### Endpoint: POST /login
+### Body Permintaan: json
 
 {
   "email": "lukman@example.com",
   "password": "lukman12345"
 }
 
-Respons:
+### Respons:
 Berhasil: 200
 
 {
