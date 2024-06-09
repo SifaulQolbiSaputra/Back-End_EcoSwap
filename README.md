@@ -9,15 +9,18 @@ https://back-end-eco-swap-api.vercel.app/
 
 ### Body Permintaan : json
 
+```json
 {
- "username": "lukman",
- "email": "lukman@example.com",
- "password": "lukman12345"
+  "username": "lukman", 
+  "email": "lukman@example.com",
+  "password": "lukman12345"
 }
+```
 
 ### Respons
 Berhasil: 201
 
+```json
 {
   "status": "success",
   "message": "User registered successfully",
@@ -28,20 +31,22 @@ Berhasil: 201
     "created_at": "2024-06-06T04:39:48.000Z"
   }
 }
-
+```
 ## 2. Login Pengguna
 
 ### Endpoint: POST /login
 ### Body Permintaan: json
 
+```json
 {
   "email": "lukman@example.com",
   "password": "lukman12345"
 }
-
+```
 ### Respons:
 Berhasil: 200
 
+```json
 {
     "status": "success",
     "message": "User login successful",
@@ -50,4 +55,4 @@ Berhasil: 200
         "userId": "f9222644-955e-4d2b-a3b7-7d6d3ecc4db9"
     }
 }
-
+```
