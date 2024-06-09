@@ -15,8 +15,8 @@ https://back-end-eco-swap-api.vercel.app/
  "email": "lukman@example.com",
  "password": "lukman12345"
 }
-### Respons
-```Berhasil: 201
+Respons
+Berhasil: 201
 {
   "status": "success",
   "message": "User registered successfully",
