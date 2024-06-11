@@ -35,8 +35,20 @@ const init = async () => {
     const response = request.response.isBoom ? request.response.output : request.response;
     response.headers['Access-Control-Allow-Origin'] = 'http://localhost:9090';
     response.headers['Access-Control-Allow-Headers'] = 'Accept, Content-Type, Authorization, X-Requested-With';
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
     response.headers['Access-Control-Allow-Credentials'] = 'true';
     return h.continue;
+  });
+
+  // Tambahkan handler untuk permintaan OPTIONS
+  server.route({
+    method: 'OPTIONS',
+    path: '/{any*}',
+    handler: (request, h) => h.response().header('Access-Control-Allow-Origin', 'http://localhost:9090')
+      .header('Access-Control-Allow-Headers', 'Accept, Content-Type, Authorization, X-Requested-With')
+      .header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+      .header('Access-Control-Allow-Credentials', 'true')
+      .code(204),
   });
 
   server.route(routes);
