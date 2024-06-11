@@ -30,6 +30,15 @@ const init = async () => {
 
   server.auth.default('jwt');
 
+  // Konfigurasi CORS
+  server.ext('onPreResponse', (request, h) => {
+    const response = request.response.isBoom ? request.response.output : request.response;
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:9090';
+    response.headers['Access-Control-Allow-Headers'] = 'Accept, Content-Type, Authorization, X-Requested-With';
+    response.headers['Access-Control-Allow-Credentials'] = 'true';
+    return h.continue;
+  });
+
   server.route(routes);
 
   await server.start();
