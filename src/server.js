@@ -24,6 +24,7 @@ const init = async () => {
       aud: false,
       iss: false,
       sub: false,
+      exp: false,
       nbf: true,
       timeSkewSec: 15,
     },
