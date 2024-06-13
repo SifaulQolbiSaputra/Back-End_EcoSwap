@@ -163,7 +163,7 @@ Berhasil: 200
 
 ## 7. Setujui penjemputan oleh admin
 
-### Endpoint: PUT /pickups/{id}/approve
+### Endpoint: POST /pickups/{id}/approve
 
 ### Headers:
 ```json
