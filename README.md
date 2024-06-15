@@ -63,8 +63,8 @@ Berhasil: 200
 ### Body Permintaan:
 ```json
 {
-  "email": "admin@example.com",
-  "password": "adminpassword"
+  "email": "admins@gmail.com",
+  "password": "admins12345"
 }
 ```
 
