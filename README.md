@@ -1,3 +1,20 @@
+# Nama Proyek
+## Getting Started
+To get started running the project locally, please follow the steps below.
+frist clone the repository.
+```sh
+git clone https://github.com/SifaulQolbiSaputra/Back-End_EcoSwap.git
+```
+Then Install dependencies and fetch data to your local machine. Note that we use NPM.
+```sh
+cd Back-End_EcoSwap
+npm install
+```
+finally run the development
+```sh
+npm run start
+```
+
 # ResulfuAPI EcoSwap
 
 ## Base URL
