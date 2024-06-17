@@ -1,19 +1,23 @@
 # Back-End EcoSwap
-## Getting Started
-To get started running the project locally, please follow the steps below.
-frist clone the repository.
+
+## Memulai
+Untuk memulai menjalankan proyek secara lokal, ikuti langkah-langkah di bawah ini.
+Clone Repositori
+Pertama, clone repositori ini ke mesin lokal Anda.
 ```sh
 git clone https://github.com/SifaulQolbiSaputra/Back-End_EcoSwap.git
 ```
-Then Install dependencies and fetch data to your local machine. Note that we use NPM.
+Kemudian, instal dependensi dan fetch data ke mesin lokal Anda. Perlu dicatat bahwa kami menggunakan NPM.
 ```sh
 cd Back-End_EcoSwap
 npm install
 ```
-finally run the development
+Terakhir, jalankan proyek dalam mode pengembangan.
 ```sh
 npm run start
 ```
+Proyek akan berjalan di http://localhost:3000. Anda dapat membuka URL tersebut di browser Anda.
+
 
 # ResulfuAPI EcoSwap
 
